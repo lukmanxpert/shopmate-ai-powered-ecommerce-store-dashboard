@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { axiosInstance } from "../../lib/axios";
+import { toast } from "react-toastify";
 
 const authSlice = createSlice({
   name: "auth",
@@ -90,8 +92,24 @@ const authSlice = createSlice({
   },
 });
 
-export const login = (data) => async (dispatch) => {};
-export const login = (data) => async (dispatch) => {};
-export const login = (data) => async (dispatch) => {};
+export const login = (data) => async (dispatch) => {
+  dispatch(authSlice.actions.loginRequest());
+  try {
+    await axiosInstance.post("/auth/login", data).then((res) => {
+      if (res.data.user.role === "Admin") {
+        dispatch(authSlice.actions.loginSuccess(res.data.user));
+        toast.success(res.data.message);
+      } else {
+        dispatch(authSlice.actions.loginFailed());
+        toast.error(res.data.message);
+      }
+    });
+  } catch (error) {
+    dispatch(authSlice.actions.loginFailed());
+    toast.error(error.response.data.message || "Login failed.");
+  }
+};
+export const getUser = (data) => async (dispatch) => {};
+export const logout = (data) => async (dispatch) => {};
 
 export default authSlice.reducer;
