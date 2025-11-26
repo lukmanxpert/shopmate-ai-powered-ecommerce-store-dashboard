@@ -90,4 +90,8 @@ const authSlice = createSlice({
   },
 });
 
+export const login = (data) => async (dispatch) => {};
+export const login = (data) => async (dispatch) => {};
+export const login = (data) => async (dispatch) => {};
+
 export default authSlice.reducer;
