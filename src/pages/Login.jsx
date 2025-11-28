@@ -15,7 +15,7 @@ const Login = () => {
     data.append("password", formData.password)
     dispatch(login(data))
   }
-  const { user, isAuthenticated } = useSelector(state => state.auth)
+  const { user, isAuthenticated, loading } = useSelector(state => state.auth)
   if (isAuthenticated && user.role === "Admin") {
     return <Navigate to={"/"} />
   }
@@ -29,7 +29,7 @@ const Login = () => {
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
               Email Address
             </label>
-            <input type="email" name="email" value={formData.email} onChange={handleChange} required placeholder="Enter your email" className="w-full px-4 py-3 border border-gray-300 rounded-xl" />
+            <input type="email" name="email" value={formData.email} onChange={handleChange} required placeholder="Enter your email" className="w-full px-4 py-3 border border-gray-300 rounded-md" />
           </div>
 
           <div className="p-2">
@@ -48,7 +48,14 @@ const Login = () => {
           </div>
 
           <div className="px-2">
-            <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition">Sign In</button>
+            <button type="submit" disabled={loading} className="w-full flex justify-center items-center gap-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3  transition">
+              {loading ? (<>
+                <div className="w-5 h-5 border-2 bg-white border-t-transparent rounded-full animate-spin" />
+                <span>Singing In...</span>
+              </>) : (
+                "Sign In"
+              )}
+            </button>
           </div>
 
         </form>
