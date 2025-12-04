@@ -36,7 +36,7 @@ const ForgotPassword = () => {
           <div className="px-2">
             <button type="submit" disabled={loading} className="w-full flex justify-center items-center gap-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3  transition">
               {loading ? (<>
-                <div className="w-5 h-5 border-2 bg-white border-t-transparent rounded-full animate-spin" />
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                 <span>Requesting for email...</span>
               </>) : (
                 "Send Reset Link"
