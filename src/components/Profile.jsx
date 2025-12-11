@@ -98,7 +98,7 @@ const Profile = () => {
               className="p-2 border rounded-md col-span-1 md:col-span-2"
             />
           </div>
-          <button onClick={ } disabled={loading} className="flex justify-center items-center gap-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 mt-4 transition-all">
+          <button onClick={updateProfile} disabled={loading} className="flex justify-center items-center gap-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 mt-4 transition-all">
             {loading ? (<>
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
               <span>Updating Profile...</span>
