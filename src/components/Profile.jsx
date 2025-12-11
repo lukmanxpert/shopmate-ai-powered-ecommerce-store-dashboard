@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import avatar from "../assets/avatar.jpg";
 import Header from "./Header";
 import { useDispatch, useSelector } from "react-redux";
 import { updateAdminPassword, updateAdminProfile } from "../store/slices/authSlice";
@@ -11,6 +10,7 @@ const Profile = () => {
   })
 
   const [avatar, setAvatar] = useState(null)
+  const [updatingSection, setUpdatingSection] = useState("")
 
   const [passwordData, setPasswordData] = useState({
     currentPassword: "",
@@ -36,7 +36,8 @@ const Profile = () => {
     const formData = new FormData()
     formData.append("name", editData.name)
     formData.append("email", editData.email)
-    formData.append("avatar", editData.avatar)
+    formData.append("avatar", avatar)
+    setUpdatingSection("Profile")
     dispatch(updateAdminProfile(formData))
   }
   const updatePassword = () => {
@@ -44,6 +45,7 @@ const Profile = () => {
     formData.append("currentPassword", passwordData.currentPassword)
     formData.append("newPassword", passwordData.newPassword)
     formData.append("confirmNewPassword", passwordData.confirmNewPassword)
+    setUpdatingSection("Password")
     dispatch(updateAdminPassword(formData))
   }
 
@@ -99,7 +101,7 @@ const Profile = () => {
             />
           </div>
           <button onClick={updateProfile} disabled={loading} className="flex justify-center items-center gap-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 mt-4 transition-all">
-            {loading ? (<>
+            {loading && updatingSection === "Profile" ? (<>
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
               <span>Updating Profile...</span>
             </>) : (
@@ -137,7 +139,7 @@ const Profile = () => {
             />
           </div>
           <button onClick={updatePassword} disabled={loading} className="flex justify-center items-center gap-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 mt-4 transition-all">
-            {loading ? (<>
+            {loading && updatingSection === "Password" ? (<>
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
               <span>Updating Password...</span>
             </>) : (
