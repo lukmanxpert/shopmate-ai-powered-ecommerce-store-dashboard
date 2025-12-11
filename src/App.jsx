@@ -29,7 +29,7 @@ function App() {
 
   const renderDashboardContent = () => {
     switch (openedComponent) {
-      case "Dashboard":
+      case "Dashboarddd":
         <Dashboard />
         break;
       case "Orders":
@@ -46,7 +46,7 @@ function App() {
         break;
 
       default:
-        return <Dashboard />
+        return <Profile />
     }
   }
 
