@@ -69,21 +69,40 @@ const orderSlice = createSlice({
         state.loading = false;
         state.orders = action.payload;
       })
-      .addCase(fetchAllOrders.rejected, (state) => {
+      .addCase(fetchAllOrders.rejected, (state, action) => {
         state.loading = false;
-        state.error = state.payload;
+        state.error = action.payload;
       })
       .addCase(updateOrderStatus.pending, (state) => {
         state.loading = true;
       })
       .addCase(updateOrderStatus.fulfilled, (state, action) => {
         state.loading = false;
-        
+        const index = state.orders.findIndex(
+          (order) => order.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.orders[index] = {
+            ...state.orders[index],
+            ...action.payload,
+          };
+        }
       })
       .addCase(updateOrderStatus.rejected, (state) => {
         state.loading = false;
-        state.error = state.payload;
       })
+      .addCase(deleteOrder.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteOrder.fulfilled, (state, action) => {
+        state.loading = false;
+        state.orders = state.orders.filter(
+          (order) => order.id !== action.payload
+        );
+      })
+      .addCase(deleteOrder.rejected, (state) => {
+        state.loading = false;
+      });
   },
 });
 
