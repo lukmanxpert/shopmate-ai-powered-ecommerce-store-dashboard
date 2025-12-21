@@ -99,6 +99,9 @@ export const login = (data) => async (dispatch) => {
       if (res.data.user.role === "Admin") {
         dispatch(authSlice.actions.loginSuccess(res.data.user));
         toast.success(res.data.message);
+      } else if (res.data.user.role === "User") {
+        dispatch(authSlice.actions.loginFailed());
+        toast.error("You're not an Admin");
       } else {
         dispatch(authSlice.actions.loginFailed());
         toast.error(res.data.message);
