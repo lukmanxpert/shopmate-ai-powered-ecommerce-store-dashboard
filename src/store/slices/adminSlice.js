@@ -78,7 +78,7 @@ export const fetchAllUsers = (page) => async (dispatch) => {
 export const deleteUser = (id, page) => async (dispatch, getState) => {
   dispatch(adminSlice.actions.deleteUserRequest());
   await axiosInstance
-    .delete(`/admin/delete/${id}}`)
+    .delete(`/admin/delete/${id}`)
     .then((res) => {
       dispatch(adminSlice.actions.deleteUserSuccess(id));
       toast.success(res.data.message || "User deleted successfully");
