@@ -10,6 +10,7 @@ const productSlice = createSlice({
   name: "product",
   initialState: {
     loading: false,
+    fetchingProducts: false,
     products: [],
     totalProducts: 0,
   },
@@ -25,18 +26,18 @@ const productSlice = createSlice({
       state.loading = false;
     },
     getAllProductRequest: (state) => {
-      state.loading = true;
+      state.fetchingProducts = true;
     },
     getAllProductSuccess: (state, action) => {
-      state.loading = false;
+      state.fetchingProducts = false;
       state.products = action.payload.products;
       state.totalProducts = action.payload.totalProducts;
     },
     getAllProductFailed: (state) => {
-      state.loading = false;
+      state.fetchingProducts = false;
     },
     updateProductRequest: (state) => {
-      state.loading = true;
+      state.fetchingProducts = true;
     },
     updateProductSuccess: (state, action) => {
       state.loading = false;
@@ -109,7 +110,7 @@ export const updateProduct = (data, id) => async (dispatch) => {
     });
 };
 
-export const deleteProduct = (id, page) => async (dispatch) => {
+export const deleteProduct = (id, page) => async (dispatch, getState) => {
   dispatch(productSlice.actions.deleteProductRequest());
   await axiosInstance
     .delete(`/delete/admin/delete/${id}`)

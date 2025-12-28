@@ -17,6 +17,8 @@ import Profile from "./components/Profile";
 import Products from "./components/Products";
 import { useEffect } from "react";
 import { getUser } from "./store/slices/authSlice";
+import { fetchAllUsers } from "./store/slices/adminSlice";
+import { fetchAllProducts } from "./store/slices/productsSlice";
 
 function App() {
 
@@ -25,6 +27,13 @@ function App() {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getUser())
+  }, [])
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(fetchAllUsers())
+      dispatch(fetchAllProducts())
+    }
   }, [])
 
   const renderDashboardContent = () => {

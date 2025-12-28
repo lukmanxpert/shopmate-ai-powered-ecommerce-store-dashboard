@@ -6,6 +6,7 @@ import Header from "./Header";
 import UpdateProductModal from "../modals/UpdateProductModal";
 import ViewProductModal from "../modals/ViewProductModal";
 import { toggleCreateProductModal, toggleUpdateProductModal, toggleViewProductModal } from "../store/slices/extraSlice";
+import { deleteProduct, fetchAllProducts } from "../store/slices/productsSlice";
 
 const Products = () => {
   const [selectedProduct, setSelectedProducts] = useState(null)
@@ -15,10 +16,11 @@ const Products = () => {
   const dispatch = useDispatch()
 
   const { isViewProductModalOpened, isCreateProductModalOpened, isUpdateProductModalOpened } = useSelector(state => state.extra)
-  const { loading, products, totalProducts } = useSelector(state => state.product)
+  const { loading, products, totalProducts, fetchingProducts } = useSelector(state => state.product)
 
   useEffect(() => {
     // fetch all products
+    dispatch(fetchAllProducts(page))
   }, [dispatch, page])
 
   useEffect(() => {
@@ -42,37 +44,9 @@ const Products = () => {
         <h1 className="text-2xl font-bold">All Users</h1>
         <p className="text-sm text-gray-600 mb-6">Manage all your orders.</p>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         <div className="p-4 sm:p-8 bg-gray-50 min-h-screen">
-          <div className={`overflow-x-auto rounded-lg ${loading ? "p-10 shadow-none" : `${products && products.length > 0 && "shadow-lg"}`}`}>
-            {loading ? (
+          <div className={`overflow-x-auto rounded-lg ${fetchingProducts ? "p-10 shadow-none" : `${products && products.length > 0 && "shadow-lg"}`}`}>
+            {fetchingProducts ? (
               <div className="w-40 h-40 mx-auto border-2 border-white border-t-transparent rounded-full animate-spin" />
             ) : products && products.length > 0 ? (
               <table className="min-w-full bg-white border border-gray-200">
@@ -114,7 +88,7 @@ const Products = () => {
                               Update
                             </button>
                             <button
-                              className="text-white rounded-md cursor-pointer px-3 py-2 font-semibold bg-blue-gradient"
+                              className="text-white rounded-md cursor-pointer px-3 py-2 font-semibold bg-red-gradient flex gap-2 items-center"
                               onClick={(e) => {
                                 e.stopPropagation()
                                 setSelectedProducts(product)
@@ -143,7 +117,7 @@ const Products = () => {
           </div>
           {/* pagination */}
           {
-            !loading && products.length > 0 && (
+            !fetchingProducts && products.length > 0 && (
               <div className="flex justify-center mt-6 gap-4">
                 <button
                   onClick={() => setPage(prev => Math.max(prev - 1, 1))}
