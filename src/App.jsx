@@ -34,7 +34,7 @@ function App() {
       dispatch(fetchAllUsers())
       dispatch(fetchAllProducts())
     }
-  }, [])
+  }, [isAuthenticated])
 
   const renderDashboardContent = () => {
     switch (openedComponent) {

@@ -9,7 +9,7 @@ import { toggleCreateProductModal, toggleUpdateProductModal, toggleViewProductMo
 import { deleteProduct, fetchAllProducts } from "../store/slices/productsSlice";
 
 const Products = () => {
-  const [selectedProduct, setSelectedProducts] = useState(null)
+  const [selectedProduct, setSelectedProduct] = useState(null)
   const [maxPage, setMaxPage] = useState(null)
   const [page, setPage] = useState(1)
 
@@ -66,23 +66,23 @@ const Products = () => {
                     products.map((product, index) => {
                       return (
                         <tr key={index} className="border-t hover:bg-gray-50" onClick={() => {
-                          setSelectedProducts(product)
+                          setSelectedProduct(product)
                           dispatch(toggleViewProductModal())
                         }}>
                           <td className="py-3 px-4">
-                            <img src={product?.images[0]?.url} alt={product.name} className="w-10 h-10 rounded-md object-cover" />
+                            <img src={product?.images[0]?.url} alt={product?.name} className="w-10 h-10 rounded-md object-cover" />
                           </td>
-                          <td className="px-3 py-4">{product.name}</td>
-                          <td className="px-3 py-4">{product.category}</td>
-                          <td className="px-3 py-4">{product.price}</td>
-                          <td className="px-3 py-4">{product.stock}</td>
-                          <td className="px-3 py-4 text-yellow-500">{product.ratings}</td>
+                          <td className="px-3 py-4">{product?.name}</td>
+                          <td className="px-3 py-4">{product?.category}</td>
+                          <td className="px-3 py-4">{product?.price}</td>
+                          <td className="px-3 py-4">{product?.stock}</td>
+                          <td className="px-3 py-4 text-yellow-500">{product?.ratings}</td>
                           <td className="px-4 py-3 flex gap-2">
                             <button
                               className="text-white rounded-md cursor-pointer px-3 py-2 font-semibold bg-blue-gradient"
                               onClick={(e) => {
                                 e.stopPropagation()
-                                setSelectedProducts(product)
+                                setSelectedProduct(product)
                                 dispatch(toggleUpdateProductModal())
                               }}>
                               Update
@@ -91,11 +91,11 @@ const Products = () => {
                               className="text-white rounded-md cursor-pointer px-3 py-2 font-semibold bg-red-gradient flex gap-2 items-center"
                               onClick={(e) => {
                                 e.stopPropagation()
-                                setSelectedProducts(product)
+                                setSelectedProduct(product)
                                 dispatch(deleteProduct(product.id, page))
                               }}>
                               {
-                                selectedProduct?.id === product.id && loading ? (
+                                selectedProduct?.id === product?.id && loading ? (
                                   <>
                                     <LoaderCircle className="w-6 h-6 animate-spin" />{" "}Deleting...
                                   </>

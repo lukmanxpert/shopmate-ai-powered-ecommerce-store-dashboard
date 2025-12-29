@@ -20,7 +20,7 @@ const productSlice = createSlice({
     },
     createProductSuccess: (state, action) => {
       state.loading = false;
-      state.products = [...action.payload, ...state.products];
+      state.products = [action.payload, ...state.products];
     },
     createProductFailed: (state) => {
       state.loading = false;
@@ -37,13 +37,13 @@ const productSlice = createSlice({
       state.fetchingProducts = false;
     },
     updateProductRequest: (state) => {
-      state.fetchingProducts = true;
+      state.loading = true;
     },
     updateProductSuccess: (state, action) => {
       state.loading = false;
-      state.products = state.products.map((product) => {
-        product.id === action.payload.id ? action.payload : product;
-      });
+      state.products = state.products.map((product) =>
+        product.id === action.payload.id ? action.payload : product
+      );
     },
     updateProductFailed: (state) => {
       state.loading = false;
@@ -74,6 +74,7 @@ export const createNewProduct = (data) => async (dispatch) => {
       dispatch(toggleCreateProductModal());
     })
     .catch((error) => {
+      console.log("error :>> ", error);
       dispatch(productSlice.actions.createProductFailed());
       toast.error(
         error?.response?.data?.message || "Failed to create product."
@@ -113,8 +114,9 @@ export const updateProduct = (data, id) => async (dispatch) => {
 export const deleteProduct = (id, page) => async (dispatch, getState) => {
   dispatch(productSlice.actions.deleteProductRequest());
   await axiosInstance
-    .delete(`/delete/admin/delete/${id}`)
+    .delete(`/product/admin/delete/${id}`)
     .then((res) => {
+      console.log("res :>> ", res);
       dispatch(productSlice.actions.deleteProductSuccess(id));
       toast.success(res.data.message || "Product deleted successfully.");
 
