@@ -52,17 +52,18 @@ const TopProductsChart = () => {
             <XAxis type="number" />
             <YAxis dataKey={"image"} type="category" tick={<CustomYAxisTick />} width={50} />
             <Tooltip content={<CustomTooltip />} wrapperStyle={{ pointerEvents: "auto" }} />
-            <Bar dataKey={"total_sold"} radius={[4, 4, 4, 4]} isAnimationActive={false} onMouseEnter={() => { }} onMouseLeave={() => { }} />
-            {topSellingProducts.slice(0, 3).map((entry, index) => {
-              return (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={
-                    index === 0 ? "#3b82f6" : index === 1 ? "#10b981" : "#f59e0b"
-                  }
-                />
-              )
-            })}
+            <Bar dataKey={"total_sold"} radius={[4, 4, 4, 4]} isAnimationActive={false} onMouseEnter={() => { }} onMouseLeave={() => { }} >
+              {topSellingProducts.slice(0, 3).map((entry, index) => {
+                return (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={
+                      index === 0 ? "#3b82f6" : index === 1 ? "#10b981" : "#f59e0b"
+                    }
+                  />
+                )
+              })}
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>

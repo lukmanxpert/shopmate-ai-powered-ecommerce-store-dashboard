@@ -6,12 +6,6 @@ const Stats = () => {
   const [revenueChange, setRevenueChange] = useState("")
   const { totalUsersCount, todayRevenue, yesterdayRevenue, totalRevenueAllTime } = useSelector(state => state.admin)
 
-  useEffect(() => {
-    let change = yesterdayRevenue === 0 ? 100 : ((todayRevenue - yesterdayRevenue) / yesterdayRevenue) * 100
-    const revenueChangeText = `${change >= 0 ? "+" : "-"}${change.toFixed(2)}% from yesterday`
-    setRevenueChange(revenueChangeText)
-  }, [])
-
   const stats = [
     {
       title: "Today's Revenue",
@@ -29,6 +23,14 @@ const Stats = () => {
       change: null
     },
   ]
+
+  useEffect(() => {
+    if (yesterdayRevenue) {
+      let change = yesterdayRevenue === 0 ? 100 : ((todayRevenue - yesterdayRevenue) / yesterdayRevenue) * 100
+      const revenueChangeText = `${change >= 0 ? "+" : "-"}${change.toFixed(2)}% from yesterday`
+      setRevenueChange(revenueChangeText)
+    }
+  }, [yesterdayRevenue])
 
   return <>
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
