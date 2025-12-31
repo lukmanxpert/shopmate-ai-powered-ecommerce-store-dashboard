@@ -98,8 +98,10 @@ export const deleteUser = (id, page) => async (dispatch, getState) => {
 export const getDashboardStats = () => async (dispatch) => {
   dispatch(adminSlice.actions.getStatsRequest());
   await axiosInstance
-    .get(`/admin/fetch/dashboard-stats}`)
-    .then((res) => dispatch(adminSlice.actions.getStatsSuccess(res.data)))
+    .get(`/admin/fetch/dashboard-stats`)
+    .then((res) => {
+      dispatch(adminSlice.actions.getStatsSuccess(res.data));
+    })
     .catch(() => dispatch(adminSlice.actions.getStatsFailed()));
 };
 
