@@ -16,7 +16,7 @@ const Products = () => {
   const dispatch = useDispatch()
 
   const { isViewProductModalOpened, isCreateProductModalOpened, isUpdateProductModalOpened } = useSelector(state => state.extra)
-  const { loading, products, totalProducts, fetchingProducts } = useSelector(state => state.product)
+  const { products, totalProducts, fetchingProducts, deleting } = useSelector(state => state.product)
 
   useEffect(() => {
     // fetch all products
@@ -95,7 +95,7 @@ const Products = () => {
                                 dispatch(deleteProduct(product.id, page))
                               }}>
                               {
-                                selectedProduct?.id === product?.id && loading ? (
+                                selectedProduct?.id === product?.id && deleting ? (
                                   <>
                                     <LoaderCircle className="w-6 h-6 animate-spin" />{" "}Deleting...
                                   </>

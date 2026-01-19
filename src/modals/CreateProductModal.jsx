@@ -5,7 +5,7 @@ import { toggleCreateProductModal } from "../store/slices/extraSlice";
 import { LoaderCircle } from "lucide-react";
 
 const CreateProductModal = () => {
-  const { loading } = useSelector((state) => state.product);
+  const { creating } = useSelector((state) => state.product);
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
@@ -143,7 +143,7 @@ const CreateProductModal = () => {
               type="submit"
               className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded col-span-1 md:col-span-2"
             >
-              {loading ? (
+              {creating ? (
                 <>
                   <LoaderCircle className="w-6 h-6 animate-spin" />
                   Creating

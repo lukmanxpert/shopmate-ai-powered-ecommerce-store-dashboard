@@ -13,17 +13,20 @@ const productSlice = createSlice({
     fetchingProducts: false,
     products: [],
     totalProducts: 0,
+    creating: false,
+    updating: false,
+    deleting: false,
   },
   reducers: {
     createProductRequest: (state) => {
-      state.loading = true;
+      state.creating = true;
     },
     createProductSuccess: (state, action) => {
-      state.loading = false;
+      state.creating = false;
       state.products = [action.payload, ...state.products];
     },
     createProductFailed: (state) => {
-      state.loading = false;
+      state.creating = false;
     },
     getAllProductRequest: (state) => {
       state.fetchingProducts = true;
@@ -37,29 +40,29 @@ const productSlice = createSlice({
       state.fetchingProducts = false;
     },
     updateProductRequest: (state) => {
-      state.loading = true;
+      state.updating = true;
     },
     updateProductSuccess: (state, action) => {
-      state.loading = false;
+      state.updating = false;
       state.products = state.products.map((product) =>
         product.id === action.payload.id ? action.payload : product
       );
     },
     updateProductFailed: (state) => {
-      state.loading = false;
+      state.updating = false;
     },
     deleteProductRequest: (state) => {
-      state.loading = true;
+      state.deleting = true;
     },
     deleteProductSuccess: (state, action) => {
-      state.loading = false;
+      state.deleting = false;
       state.products = state.products.filter(
         (product) => product.id !== action.payload
       );
       state.totalProducts = Math.max(0, state.totalProducts - 1);
     },
     deleteProductFailed: (state) => {
-      state.loading = false;
+      state.deleting = false;
     },
   },
 });

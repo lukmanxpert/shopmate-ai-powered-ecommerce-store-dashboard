@@ -5,7 +5,7 @@ import { LoaderCircle } from "lucide-react";
 import { updateProduct } from "../store/slices/productsSlice";
 
 const UpdateProductModal = ({ selectedProduct }) => {
-  const { loading } = useSelector((state) => state.product);
+  const { updating } = useSelector((state) => state.product);
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
@@ -122,7 +122,7 @@ const UpdateProductModal = ({ selectedProduct }) => {
             type="submit"
             className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white py-2 px-6 rounded col-span-1 md:col-span-2"
           >
-            {loading ? (
+            {updating ? (
               <>
                 <LoaderCircle className="w-6 h-6 animate-spin" />
                 Updating
